@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الفهرس</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        #toc {
+            list-style-type: none;
+            padding: 0;
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+        #toc li {
+            margin-bottom: 10px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        #toc li:last-child {
+            border-bottom: none;
+        }
+        #toc a {
+            text-decoration: none;
+            color: #0066cc;
+            transition: color 0.3s ease;
+        }
+        #toc a:hover {
+            color: #004080;
+        }
+    </style>
+</head>
+<body>
+    <h1>الفهرس</h1>
+    <ul id="toc"></ul>
+
+    <script>
+        const tocItems = [
+            { title: 'المقدمة', page: 1 },
+            { title: 'أهداف الإدارة العامة للخدمات الطبية', page: 2 },
+            { title: 'القوانين واللوائح (القرارات) المنظمة للتعامل مع أدوية الهيئة العامة للتأمين الصحي', page: 3 },
+            { title: 'أمثلة للمخالفات التي تندرج تحت طائلة قانون ١٠ لسنة ٢٠٠٣', page: 4 },
+            { title: 'الأقسام الرئيسية بالإدارة', page: 5 },
+            { title: 'تعليمات عامة للسادة الأطباء والصيادلة مستخدمي التذاكر الطبية', page: 6 },
+            { title: 'الإجراءات التي تتبع عند استلام وإرجاع التذاكر الطبية', page: 7 },
+            { title: 'الإجراءات التي تتبع في حالة فقد التذاكر الطبية', page: 10 },
+            { title: 'تحرير التذاكر الطبية', page: 11 },
+            { title: 'وصف الدواء', page: 15 },
+            { title: 'الأمراض المزمنة', page: 17 },
+            { title: 'تعليمات عامة للصيادلة', page: 20 },
+            { title: 'الأخطاء الممكن حدوثها من بعض الأطباء والصيادلة وما يقابلها من المراجعة الفنية', page: 24 },
+            { title: 'إرشادات عامة للصيدليات المتعاقدة', page: 27 },
+            { title: 'تعليمات عامة', page: 32 },
+            { title: 'لائحة المخالفات والجزاءات للصيدليات المتعاقدة', page: 34 },
+            { title: 'آلية صرف أدوية الاسم التجاري', page: 36 },
+            { title: 'آلية التعامل مع الأدوية', page: 37 },
+            { title: 'البروتوكولات المنظمة لصرف الأدوية', page: 40 },
+            { title: 'أدوية الأورام', page: 40 },
+            { title: 'أدوية نقص الدم', page: 67 },
+            { title: 'البروتوكول العلاجي لمرضى السكر', page: 70 },
+            { title: 'ضوابط استخدام مثبطات المناعة بعد زرع الكلى', page: 75 },
+            { title: 'Alpha Calcidol ضوابط صرف', page: 76 },
+            { title: 'بروتوكول عقار الإريثروبيوتين', page: 77 },
+            { title: 'Gilenya ضوابط صرف', page: 80 },
+            { title: 'IVIG ضوابط صرف', page: 81 },
+            { title: 'ضوابط استخدام الألبيومين البشري', page: 83 },
+            { title: 'ضوابط استخدام الأدوية المسيلة للدم أثناء الحمل في وجود صمامات القلب', page: 85 },
+            { title: 'ضوابط صرف أدوية التصلب المتناثر', page: 86 },
+            { title: 'LHRH Analogue ضوابط صرف', page: 87 },
+            { title: 'Growth hormone ضوابط صرف', page: 88 },
+            { title: 'أدوية الكبد', page: 89 },
+            { title: 'أدوية أمراض الدم', page: 101 },
+            { title: 'ضوابط صرف أدوية المضادات الحيوية', page: 114 },
+            { title: 'أدوية الروماتيزم', page: 118 },
+            { title: 'أدوية هشاشة العظام', page: 120 },
+            { title: 'ضوابط صرف المخدرات', page: 123 },
+            { title: 'التعليمات المنظمة لصرف اللاصقات والكبريتات الطبية', page: 126 }
+        ];
+
+        function createTOC() {
+            const tocElement = document.getElementById('toc');
+            tocItems.forEach(item => {
+                const li = document.createElement('li');
+                const a = document.createElement('a');
+                a.textContent = `${item.title} (صفحة ${item.page})`;
+                a.href = `https://online.fliphtml5.com/ycdxn/moun/#p=${item.page}`;
+                a.target = "_blank"; // Opens in a new tab
+                li.appendChild(a);
+                tocElement.appendChild(li);
+            });
+        }
+
+        createTOC();
+    </script>
+</body>
+</html>

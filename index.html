@@ -4,74 +4,216 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>الفهرس</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
+        :root {
+            --primary-color: #1a365d;
+            --secondary-color: #2c5282;
+            --background-color: #f7fafc;
+            --text-color: #1a202c;
+            --hover-color: #2b6cb0;
+            --border-color: #e2e8f0;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --primary-color: #81e6d9;
+                --secondary-color: #4fd1c5;
+                --background-color: #1a202c;
+                --text-color: #f7fafc;
+                --hover-color: #38b2ac;
+                --border-color: #2d3748;
+            }
+        }
+
+        * {
+            box-sizing: border-box;
             margin: 0;
-            padding: 20px;
-            background-color: #f0f0f0;
+            padding: 0;
         }
-        h1 {
+
+        body {
+            font-family: 'Tajawal', Arial, sans-serif;
+            line-height: 1.8;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            font-size: 18px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        header {
             text-align: center;
-            color: #333;
+            margin-bottom: 40px;
         }
+
+        h1 {
+            color: var(--primary-color);
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        #search-container {
+            margin-bottom: 20px;
+        }
+
+        #search-input {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.1em;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        #search-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+        }
+
         #toc {
             list-style-type: none;
-            padding: 0;
-            max-width: 800px;
-            margin: 0 auto;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            padding: 20px;
+            background-color: var(--background-color);
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            overflow: hidden;
         }
+
         #toc li {
-            margin-bottom: 10px;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
         }
+
         #toc li:last-child {
             border-bottom: none;
         }
+
         #toc a {
             text-decoration: none;
-            color: #0066cc;
-            transition: color 0.3s ease;
+            color: var(--text-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 25px;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
-        #toc a:hover {
-            color: #004080;
+
+        #toc a:hover, #toc a:focus {
+            background-color: var(--hover-color);
+            color: var(--background-color);
+        }
+
+        #toc a:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+        }
+
+        .page-number {
+            font-weight: bold;
+            margin-right: 10px;
+            flex-shrink: 0;
+        }
+
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--primary-color);
+            color: var(--background-color);
+            padding: 8px;
+            z-index: 100;
+            transition: top 0.3s ease;
+        }
+
+        .skip-link:focus {
+            top: 0;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                font-size: 16px;
+            }
+
+            .container {
+                padding: 20px 10px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            #toc a {
+                padding: 12px 20px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                transition: none !important;
+            }
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        mark {
+            background-color: var(--secondary-color);
+            color: var(--background-color);
         }
     </style>
 </head>
 <body>
-    <h1>الفهرس</h1>
-    <ul id="toc"></ul>
+    <a href="#main-content" class="skip-link">تخطي إلى المحتوى الرئيسي</a>
+    <div class="container">
+        <header>
+            <h1>الفهرس</h1>
+        </header>
+        <main id="main-content">
+            <div id="search-container">
+                <label for="search-input" class="hidden">بحث في الفهرس</label>
+                <input type="search" id="search-input" placeholder="بحث في الفهرس" aria-label="بحث في الفهرس">
+            </div>
+            <nav aria-label="الفهرس">
+                <ul id="toc"></ul>
+            </nav>
+        </main>
+    </div>
 
     <script>
         const tocItems = [
             { title: 'المقدمة', page: 1 },
-            { title: 'أهداف الإدارة العامة للخدمات الطبية', page: 2 },
+            { title: 'انظمة الانتفاع بالخدمات التأمينية', page: 2 },
             { title: 'القوانين واللوائح (القرارات) المنظمة للتعامل مع أدوية الهيئة العامة للتأمين الصحي', page: 3 },
-            { title: 'أمثلة للمخالفات التي تندرج تحت طائلة قانون ١٠ لسنة ٢٠٠٣', page: 4 },
-            { title: 'الأقسام الرئيسية بالإدارة', page: 5 },
+            { title: 'امثلة للمخالفات التي تندرج تحت طائلة قانون 10 سنة 67', page: 4 },
+            { title: 'اوامر ادارية', page: 5 },
             { title: 'تعليمات عامة للسادة الأطباء والصيادلة مستخدمي التذاكر الطبية', page: 6 },
             { title: 'الإجراءات التي تتبع عند استلام وإرجاع التذاكر الطبية', page: 7 },
-            { title: 'الإجراءات التي تتبع في حالة فقد التذاكر الطبية', page: 10 },
-            { title: 'تحرير التذاكر الطبية', page: 11 },
+            { title: 'الإجراءات التي تتبع في حالة فقد دفتر التذاكر الطبية', page: 10 },
+            { title: 'اجراءات التعامل مع المنتفع في تحرير وصرف التذاكر الطبية', page: 11 },
             { title: 'وصف الدواء', page: 15 },
             { title: 'الأمراض المزمنة', page: 17 },
             { title: 'تعليمات عامة للصيادلة', page: 21 },
             { title: 'الأخطاء الممكن حدوثها من بعض الأطباء والصيادلة وما يقابلها من المراجعة الفنية', page: 24 },
             { title: 'إرشادات عامة للصيدليات المتعاقدة', page: 27 },
-            { title: 'تعليمات عامة', page: 32 },
+            { title: 'احكام عامة', page: 32 },
             { title: 'لائحة المخالفات والجزاءات للصيدليات المتعاقدة', page: 34 },
             { title: 'آلية صرف أدوية الاسم التجاري', page: 36 },
-            { title: 'آلية التعامل مع الأدوية', page: 37 },
+            { title: 'آلية التعامل مع اللجنة العليا للدواء', page: 37 },
             { title: 'البروتوكولات المنظمة لصرف الأدوية', page: 40 },
             { title: 'أدوية الأورام', page: 41 },
             { title: 'أدوية الاوعية الدموية', page: 67 },
-                   { title: 'أدوية الصرع', page: 69 },
+            { title: 'أدوية الصرع', page: 69 },
             { title: 'البروتوكول العلاجي لمرضى السكر', page: 70 },
             { title: 'ضوابط استخدام مثبطات المناعة بعد زرع الكلى', page: 75 },
             { title: 'Alpha Calcidol ضوابط صرف', page: 76 },
@@ -79,33 +221,60 @@
             { title: 'Gilenya ضوابط صرف', page: 80 },
             { title: 'IVIG ضوابط صرف', page: 81 },
             { title: 'ضوابط استخدام الألبيومين البشري', page: 83 },
-            { title: 'ضوابط استخدام الأدوية المسيلة للدم أثناء الحمل في وجود صمامات القلب', page: 85 },
-            { title: 'ضوابط صرف أدوية التصلب المتناثر', page: 86 },
+            { title: 'ضوابط استخدام الأدوية المسيلة للدم أثناء الحمل في وجود تغيير صمامات القلب', page: 85 },
+            { title: 'ضوابط صرف أدوية الهيبارين منخفض الوزن الجزيئي', page: 86 },
             { title: 'LHRH Analogue ضوابط صرف', page: 87 },
             { title: 'Growth hormone ضوابط صرف', page: 88 },
             { title: 'أدوية الكبد', page: 91 },
             { title: 'أدوية أمراض الدم', page: 101 },
             { title: 'ضوابط صرف أدوية المضادات الحيوية', page: 114 },
-            { title: 'أدوية الروماتيزم', page: 118 },
-            { title: 'أدوية هشاشة العظام', page: 120 },
+            { title: 'أدوية الرمد', page: 118 },
+            { title: 'أدوية هشاشة العظام', page: 121 },
             { title: 'ضوابط صرف المخدرات', page: 123 },
-            { title: 'التعليمات المنظمة لصرف اللاصقات والكبريتات الطبية', page: 126 }
+            { title: 'التعليمات المنظمة لصرف الفلانشات والشرابات الطبية', page: 126 },
+            { title: 'الفهرس', page: 127 }
         ];
 
         function createTOC() {
             const tocElement = document.getElementById('toc');
-            tocItems.forEach(item => {
+            tocItems.forEach((item, index) => {
                 const li = document.createElement('li');
                 const a = document.createElement('a');
-                a.textContent = `${item.title} (صفحة ${item.page})`;
+                a.innerHTML = `<span class="title">${item.title}</span><span class="page-number">${item.page}</span>`;
                 a.href = `https://online.fliphtml5.com/ycdxn/moun/#p=${item.page}`;
-                a.target = "_blank"; // Opens in a new tab
+                a.target = "_blank";
+                a.rel = "noopener noreferrer";
+                a.setAttribute('aria-label', `${item.title} - الصفحة ${item.page}`);
                 li.appendChild(a);
                 tocElement.appendChild(li);
             });
         }
 
+        function highlightText(text, searchTerm) {
+            if (!searchTerm) return text;
+            const regex = new RegExp(`(${searchTerm})`, 'gi');
+            return text.replace(regex, '<mark>$1</mark>');
+        }
+
+        function filterTOC() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            const tocItems = document.querySelectorAll('#toc li');
+
+            tocItems.forEach(item => {
+                const title = item.querySelector('.title').textContent.toLowerCase();
+                const pageNumber = item.querySelector('.page-number').textContent;
+                
+                if (title.includes(searchTerm) || pageNumber.includes(searchTerm)) {
+                    item.style.display = '';
+                    item.querySelector('.title').innerHTML = highlightText(item.querySelector('.title').textContent, searchTerm);
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+
         createTOC();
+        document.getElementById('search-input').addEventListener('input', filterTOC);
     </script>
 </body>
 </html>

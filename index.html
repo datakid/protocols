@@ -502,6 +502,17 @@ mark {
     </div>
 
     <script>
+        const escapeHTML = (str) => {
+            if (str === null || str === undefined) return '';
+            return String(str).replace(/[&<>"']/g, match => ({
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#39;'
+            })[match]);
+        };
+
         const tocItems = [
             { title: 'المقدمة', page: 1 }, { title: 'انظمة الانتفاع بالخدمات التأمينية', page: 2 },
             { title: 'القوانين واللوائح (القرارات) المنظمة للتعامل مع أدوية الهيئة العامة للتأمين الصحي', page: 3 },
@@ -573,7 +584,7 @@ mark {
             a.target = "_blank";
             a.rel = "noopener noreferrer";
             a.setAttribute('aria-label', `${item.title} - الصفحة ${item.page}`);
-            a.innerHTML = `<span class="title">${item.title}</span><span class="page-number">${item.page}</span>`;
+            a.innerHTML = `<span class="title">${escapeHTML(item.title)}</span><span class="page-number">${escapeHTML(item.page.toString())}</span>`;
             li.appendChild(a);
             return li;
         }
@@ -589,10 +600,11 @@ mark {
         }
 
         function highlightText(text, searchTerm) {
-            if (!searchTerm) return text;
-            const escapedSearchTerm = searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            const escapedText = escapeHTML(text);
+            if (!searchTerm) return escapedText;
+            const escapedSearchTerm = escapeHTML(searchTerm).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
             const regex = new RegExp(`(${escapedSearchTerm})`, 'gi');
-            return text.replace(regex, '<mark>$1</mark>');
+            return escapedText.replace(regex, '<mark>$1</mark>');
         }
 
         function filterAndRenderTOC() {
@@ -635,10 +647,10 @@ mark {
                 .sort((a, b) => a.distance - b.distance).slice(0, 1);
 
             if (suggestions.length > 0) {
-                const bestSuggestion = suggestions[0].title;
+                const bestSuggestion = escapeHTML(suggestions[0].title);
                 didYouMeanContainer.innerHTML = `هل تقصد: <span class="suggestion-link" role="button" tabindex="0">${bestSuggestion}</span>؟`;
                 didYouMeanContainer.querySelector('.suggestion-link').onclick = () => {
-                    searchInput.value = bestSuggestion;
+                    searchInput.value = suggestions[0].title;
                     filterAndRenderTOC();
                     searchInput.focus();
                 };
@@ -672,7 +684,6 @@ mark {
             moonIcon.style.display = isDark ? 'none' : 'block';
             themeToggleBtn.setAttribute('aria-label', isDark ? 'تفعيل المظهر الفاتح' : 'تفعيل المظهر الداكن');
 
-            // Update --color-background-rgb-val for the scrolled controls panel
             const bgRgbVal = getComputedStyle(htmlElement).getPropertyValue('--color-background-rgb').trim();
             if (bgRgbVal) {
                 htmlElement.style.setProperty('--color-background-rgb-val', bgRgbVal);
